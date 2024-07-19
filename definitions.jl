@@ -185,7 +185,7 @@ function edgevectorsets_refl(a0::Float64, a1::Float64, b::Float64)
 
     res = [ [0, 0, n13_refl(a0, a1, b), n14, n15_refl(a0, a1, b), n16],
             [0, 0, n23_refl(a0, a1, b), n24, n25_refl(a0, a1, b), n26],
-            [n13_refl(a0, a1, b), n23, 0, n34_refl(a0, a1, b), 0, n36_refl(a0, a1, b)],
+            [n13_refl(a0, a1, b), n23_refl(a0, a1, b), 0, n34_refl(a0, a1, b), 0, n36_refl(a0, a1, b)],
             [n14, n24, n34_refl(a0, a1, b), 0, n45_refl(a0, a1, b), 0],
             [n15_refl(a0, a1, b), n25_refl(a0, a1, b), 0, n45_refl(a0, a1,b), 0, n56_refl(a0, a1, b)],
             [n16, n26, n36_refl(a0, a1, b), 0, n56_refl(a0, a1, b), 0]]
@@ -208,6 +208,7 @@ function nullvectorsets_refl(a0::Float64, a1::Float64, b::Float64)
 end
 
 indexsets = [[3, 4, 5, 6], [3, 4, 5, 6], [1, 2, 4, 6], [1, 2, 3, 5], [1, 2, 4, 6], [1, 2, 3, 5]]
+indexsets_gf = [[3, 4, 5], [3, 4, 5], [1, 2, 4], [1, 2, 3, 5], [1, 2, 4]] #gf stands for gauge fixed, where the group element g_6 = 1, associated to a trap.
 
 function lengthsetsSL(a0::Float64, a1::Float64, b::Float64)
     
@@ -265,9 +266,42 @@ function HessianSLϑ(a0::Float64, a1::Float64, b0::Float64)
     
 end
 
+function HessianSLϑ_gf(a0::Float64, a1::Float64, b0::Float64)
+
+    H = zeros(ComplexF64,15,15)
+
+    for a in 1:5
+        for i in 1:3
+            for j in 1:3
+
+                A_block = 3(a-1) + i
+                C_block = 3(a-1) + j
+
+                H[A_block, C_block] =   -im/2 * sum([ lengthsetsSL(a0, a1, b0)[a][c] * (η[i][j] + edgevectorsets_refl(a0, a1, b0)[a][c][i]*edgevectorsets_refl(a0, a1, b0)[a][c][j] - 
+                im*ϑsets(a0, a1, b0)[a][c]*nullvectorsets_refl(a0, a1, b0)[a][c][i]*nullvectorsets_refl(a0, a1, b0)[a][c][j]) for c in indexsets[a]])
+
+                for b in indexsets_gf[a]
+
+                    B_block = 3(b-1) + j             
+                    
+                    H[A_block, B_block] = im/2 * lengthsetsSL(a0, a1, b0)[a][b] * 
+                    (η[i][j] + edgevectorsets_refl(a0, a1, b0)[a][b][i]*edgevectorsets_refl(a0, a1, b0)[a][b][j] - 
+                    im*ϑsets(a0, a1, b0)[a][b]*
+                    nullvectorsets_refl(a0, a1, b0)[a][b][i]*nullvectorsets_refl(a0, a1, b0)[a][b][j] + 
+                    ϵsets[a][b]*sum([levicivita([i,j,k])*η[k][l]*edgevectorsets_refl(a0, a1, b0)[a][b][l] for k in 1:3, l in 1:3]))
+
+                end
+            end
+        end
+    end  
+    
+    H
+    
+end
+
 function Det_SL_ϑ(a0::Float64, a1::Float64, b::Float64)
 
-    res = det(HessianSLϑ(a0, a1, b))
+    res = det(HessianSLϑ_gf(a0, a1, b))
     
 end
 
