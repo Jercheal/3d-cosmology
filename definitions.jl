@@ -32,6 +32,12 @@ function S_Regge_I(a0::Float64,a1::Float64,b::Float64)
 
 end
 
+function S_Regge_I_complex(a0::Float64,a1::Float64,b::Float64)
+
+    res = -4*abs(a0 - a1)*log(complex(abs(a0 - a1) + sqrt(complex(2*(a0 - a1)^2 - 4*b^2)))) +  4*abs(b)*  log(complex(a0 - a1)^2 + sqrt(complex(8*b^2*((a0 - a1)^2 - 2*b^2)))) + (4*abs(b) -     2*abs(a0 - a1))*log(4*b^2 - (a0 - a1)^2) + im*pi/2 * (4*abs(a0 - a1) - 4*b)
+
+end
+
 function S_Regge_null(a0::Float64,a1::Float64,b::Float64)
 
     res = 4*abs(a0 - a1)*log(abs(a0 - a1)) - 4*abs(b)*log((a0 - a1)^2/2)
@@ -45,6 +51,12 @@ function S_Regge_II(a0::Float64,a1::Float64,b::Float64)
     res = -4*(a0 - a1)*asinh((a0 - a1)/sqrt(complex((a0 - a1)^2 - 4*b^2))) + 4*abs(b)*acosh((a0 - a1)^2/((a0 - a1)^2 - 4*b^2))
 
     real(res)
+
+end
+
+function S_Regge_II_complex(a0::Float64,a1::Float64,b::Float64)
+
+    res = -4*(a0 - a1)*asinh((a0 - a1)/sqrt(complex((a0 - a1)^2 - 4*b^2))) + 4*abs(b)*(im*pi/2 + acosh((a0 - a1)^2/((a0 - a1)^2 - 4*b^2)))
 
 end
 
@@ -372,5 +384,35 @@ end
 function Ampl_vertex_III(a0::Float64, a1::Float64, b::Float64)
 
     res = Ampl_face_SL(a0) * Ampl_face_SL(a1) * Ampl_face_TL(b) * exp(im * S_Regge_III(a0, a1, b))/sqrt(complex(Det_TL(a0, a1, b)))
+    
+end
+
+function μcont_SL(a0::Float64, a1::Float64, b::Float64)
+
+    res = (-(1/2))*sqrt(complex(3*pi*im*(a0 + a1))) * (b/(complex((a0 - a1)^2/2 - b^2)^(3/4)))
+ 
+end
+
+function μcont_TL(a0::Float64, a1::Float64, b::Float64)
+
+    res = ((1/2))*sqrt(complex(3*pi*im*(a0 + a1))) * (b/(complex((a0 - a1)^2/2 + b^2)^(3/4)))
+ 
+end
+
+function Ampl_vertex_I_ESF(a0::Float64, a1::Float64, b::Float64)
+
+    res = μcont_SL(a0, a1, b) * exp(im * S_Regge_I_complex(a0, a1, b))
+    
+end
+
+function Ampl_vertex_II_ESF(a0::Float64, a1::Float64, b::Float64)
+
+    res = μcont_SL(a0, a1, b) * exp(im * S_Regge_II_complex(a0, a1, b))
+    
+end
+
+function Ampl_vertex_III_ESF(a0::Float64, a1::Float64, b::Float64)
+
+    res = μcont_TL(a0, a1, b) * exp(im * S_Regge_III(a0, a1, b))
     
 end
