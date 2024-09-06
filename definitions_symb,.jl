@@ -1,3 +1,9 @@
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+# This julia file contains the SYMBOLIC definitions of the geometric quantities as well as the Hessian determinant that enter the amplitude of the effective cosmological model #
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+
+#----------------------------------------------
+
 function generate_null_sym(v::Array{Num, 1})
 
     res = [cosh(asinh(-v[1])), cos(atan(v[2],v[3])) + v[1]*sin(atan(v[2],v[3])), -sin(atan(v[2],v[3]))+v[1]*cos(atan(v[2],v[3]))]

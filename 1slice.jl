@@ -1,3 +1,11 @@
+#--------------------------------------------------------------------------------------------------------------#
+# This julia file contains the definition of the 3d effective cosmological spin foam model with one bulk slice #
+#--------------------------------------------------------------------------------------------------------------#
+
+#----------------------------------------------
+
+### Definition of weights entering the scalar field action
+
 function w(a0::Float64, a1::Float64, b::Float64)
 
     res = (a0 + a1)^2 / (8 * sqrt(complex((a0 - a1)^2/2 + b^2)))
@@ -12,6 +20,10 @@ function M(a0::Float64, a1::Float64, b::Float64, m::Float64)
 
 end
 
+#----------------------------------------------
+
+### Scalar field amplitude after integrating out the bulk scalar field 
+
 function ϕintegral(a0::Float64, a1::Float64, a2::Float64, b0::Float64, b1::Float64, ϕ0::Float64, ϕ2::Float64, m::Float64)
 
     res = exp(im*((ϕ0 - ϕ2)^2*((w(a0, a1, b0)*w(a1, a2, b1))/(w(a0, a1, b0) + w(a1, a2, b1) - M(a0, a1, b0, m) - M(a1, a2, b1, m))) 
@@ -21,6 +33,10 @@ function ϕintegral(a0::Float64, a1::Float64, a2::Float64, b0::Float64, b1::Floa
     res *= sqrt(complex((im * pi)/(w(a0, a1, b0) + w(a1, a2, b1) - M(a0, a1, b0, m) - M(a1, a2, b1, m))))
 
 end
+
+#----------------------------------------------
+
+### Full amplitude in Sector III after integrating out the scalar field
 
 function Ampl_1slice(a0::Float64, a1::Float64, a2::Float64, b0::Float64, b1::Float64, ϕ0::Float64, ϕ2::Float64, m::Float64)
 

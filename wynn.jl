@@ -1,3 +1,7 @@
+#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+# This julia file provides an explicit implementation of Wynn's epsilon algorithm to accelerate sequence convergence. Includes method for more than one summation variable #
+#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+
 function acc_triang(mat::Matrix{ComplexF64}, N::Int64)
 
     res = zeros(ComplexF64, N)
