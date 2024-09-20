@@ -373,19 +373,19 @@ end
 
 function Ampl_vertex_I(a0::Float64, a1::Float64, b::Float64)
 
-    res = Ampl_face_SL(a0) * Ampl_face_SL(a1) * Ampl_face_SL(b) * (exp(im * S_Regge_I(a0, a1, b))/sqrt(complex(Det_SL_Id(a0, a1, b))) + ϑb(a0, a1, b)^4 * exp(-im * S_Regge_I(a0, a1, b))/sqrt(complex(Det_SL_ϑ(a0, a1, b))))
+    res = Ampl_face_SL(b) * (exp(im * S_Regge_I(a0, a1, b))/sqrt(complex(Det_SL_Id(a0, a1, b))) + ϑb(a0, a1, b)^4 * exp(-im * S_Regge_I(a0, a1, b))/sqrt(complex(Det_SL_ϑ(a0, a1, b))))
 
 end
 
 function Ampl_vertex_null(a0::Float64, a1::Float64, b::Float64)
 
-    res = Ampl_face_SL(a0) * Ampl_face_SL(a1) * Ampl_face_SL(b) * exp(im * S_Regge_null(a0, a1, b))/sqrt(complex(Det_SL_Id(a0, a1, b)))
+    res =  Ampl_face_SL(b) * exp(im * S_Regge_null(a0, a1, b))/sqrt(complex(Det_SL_Id(a0, a1, b)))
     
 end
 
 function Ampl_vertex_II(a0::Float64, a1::Float64, b::Float64)
 
-    res = Ampl_face_SL(a0) * Ampl_face_SL(a1) * Ampl_face_SL(b) * exp(im * S_Regge_II(a0, a1, b))/sqrt(complex(Det_SL_Id(a0, a1, b)))
+    res =  Ampl_face_SL(b) * exp(im * S_Regge_II(a0, a1, b))/sqrt(complex(Det_SL_Id(a0, a1, b)))
     
 end
 
@@ -411,7 +411,7 @@ end
 
 function Ampl_vertex_III(a0::Float64, a1::Float64, b::Float64)
 
-    res = Ampl_face_SL(a0) * Ampl_face_SL(a1) * Ampl_face_TL(b) * exp(im * S_Regge_III(a0, a1, b))/sqrt(complex(Det_TL(a0, a1, b)))
+    res =  Ampl_face_TL(b) * exp(im * S_Regge_III(a0, a1, b))/sqrt(complex(Det_TL(a0, a1, b)))
     
 end
 
