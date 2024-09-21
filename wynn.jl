@@ -10,9 +10,9 @@ function acc_triang(mat::Matrix{ComplexF64}, N::Int64)
 
         part_sum = 0.0 + 0.0im
         
-        for i in 1:(n-1)
+        for i in 1:n
 
-            for j in 1:(N-i+1)
+            for j in 1:(n-i+1)
                 
                 part_sum += mat[i,j]
 
