@@ -40,7 +40,7 @@ end
 
 function Ampl_1slice(a0::Float64, a1::Float64, a2::Float64, b0::Float64, b1::Float64, ϕ0::Float64, ϕ2::Float64, m::Float64)
 
-    res = Ampl_vertex_III(a0, a1, b0) * Ampl_vertex_III(a1, a2, b1) * ϕintegral(a0, a1, a2, b0, b1, ϕ0, ϕ2, m)
+    res = Ampl_face_SL(a1) * Ampl_vertex_III(a0, a1, b0) * Ampl_vertex_III(a1, a2, b1) * ϕintegral(a0, a1, a2, b0, b1, ϕ0, ϕ2, m)
     
 end
 
