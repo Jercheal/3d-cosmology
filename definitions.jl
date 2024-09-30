@@ -24,6 +24,14 @@ function Vol3TL(a0::Float64,a1::Float64,b::Float64)
 
 end
 
+function Vol3TL_big(a0::BigFloat, a1::BigFloat, b::BigFloat)
+
+    res = (a0^2 + a0*a1 + a1^2) * sqrt(complex((a0-a1)^2/2 + b^2))/3
+
+    real(res)
+
+end
+
 function generate_null(v::Array{Float64, 1})
 
     res = [cosh(asinh(-v[1])), cos(atan(v[2],v[3])) + v[1]*sin(atan(v[2],v[3])), -sin(atan(v[2],v[3]))+v[1]*cos(atan(v[2],v[3]))]
@@ -89,6 +97,14 @@ function S_Regge_IandII(a0::Float64,a1::Float64,b::Float64)
 end
 
 function S_Regge_III(a0::Float64,a1::Float64,b::Float64)
+
+    res = -4*(a0 - a1)*asinh(complex((a0 - a1)/sqrt(complex(4*b^2 + (a0 - a1)^2)))) + 4*abs(b)*(pi/2 - acos(complex((a0 - a1)^2/(4*b^2 + (a0 - a1)^2))))
+
+    real(res)
+
+end
+
+function S_Regge_III_big(a0::BigFloat,a1::BigFloat,b::BigFloat)
 
     res = -4*(a0 - a1)*asinh(complex((a0 - a1)/sqrt(complex(4*b^2 + (a0 - a1)^2)))) + 4*abs(b)*(pi/2 - acos(complex((a0 - a1)^2/(4*b^2 + (a0 - a1)^2))))
 
@@ -427,6 +443,12 @@ function μcont_TL(a0::Float64, a1::Float64, b::Float64)
  
 end
 
+function μcont_TL_big(a0::BigFloat, a1::BigFloat, b::BigFloat)
+
+    res = ((1/2))*sqrt(complex(3*pi*im*(a0 + a1))) * (b/(complex((a0 - a1)^2/2 + b^2)^(3/4)))
+ 
+end
+
 function Ampl_vertex_I_ESF(a0::Float64, a1::Float64, b::Float64)
 
     res = μcont_SL(a0, a1, b) * exp(im * S_Regge_I_complex(a0, a1, b))
@@ -442,5 +464,11 @@ end
 function Ampl_vertex_III_ESF(a0::Float64, a1::Float64, b::Float64)
 
     res = μcont_TL(a0, a1, b) * exp(im * S_Regge_III(a0, a1, b))
+    
+end
+
+function Ampl_vertex_III_ESF_big(a0::BigFloat, a1::BigFloat, b::BigFloat)
+
+    res = μcont_TL_big(a0, a1, b) * exp(im * S_Regge_III_big(a0, a1, b))
     
 end
