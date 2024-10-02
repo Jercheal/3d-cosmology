@@ -36,6 +36,16 @@ end
 
 #----------------------------------------------
 
+### Scalar field solutions for single bulk slice
+
+function ϕ1_sol(a0::Float64, a1::Float64, a2::Float64, b0::Float64, b1::Float64, ϕ0::Float64, ϕ2::Float64, m::Float64)
+
+    res = (ϕ0 * w(a0, a1, b0) + ϕ2 * w(a1, a2, b1))/(w(a0, a1, b0) + w(a1, a2, b1) - M(a0, a1, b0, m) + M(a1, a2, b1, m))
+
+end
+
+#----------------------------------------------
+
 ### Scalar field amplitude after integrating out the bulk scalar field 
 
 function ϕintegral(a0::Float64, a1::Float64, a2::Float64, b0::Float64, b1::Float64, ϕ0::Float64, ϕ2::Float64, m::Float64)
@@ -56,6 +66,16 @@ function ϕintegral_big(a0::BigFloat, a1::BigFloat, a2::BigFloat, b0::BigFloat, 
 
     res *= sqrt(complex((im * pi)/(w_big(a0, a1, b0) + w_big(a1, a2, b1) - M_big(a0, a1, b0, m) - M_big(a1, a2, b1, m))))
 
+end
+
+#----------------------------------------------
+
+### Full amplitude in Sector III before integrating out the scalar field
+
+function Ampl_1slice_phi1sol(a0::Float64, a1::Float64, a2::Float64, b0::Float64, b1::Float64, ϕ0::Float64, ϕ1sol::Float64, ϕ2::Float64, m::Float64)
+
+    res = Ampl_face_SL(a1) * Ampl_vertex_III(a0, a1, b0) * Ampl_vertex_III(a1, a2, b1) * exp(im * (S_phi_TL(a0, a1, b0, ϕ0, ϕ1sol, m) + S_phi_TL(a1, a2, b1, ϕ1sol, ϕ2, m)))
+    
 end
 
 #----------------------------------------------
