@@ -12,7 +12,7 @@ m = 0.05
 a0 = 10.0
 a2 = 30.0
 
-ref_step = 0.4
+ref_step = 0.1
 b_range = 0.5:ref_step:50.0
 N = length(b_range)
 Z_Re = zeros(Float64, N-1, N-1)
@@ -29,5 +29,5 @@ Threads.@threads for i in 2:N
 
 end
 
-writedlm("/ssd/ri47hud/Projects/3d Cosmology/codes/data/Z_Re_a0=10_a2=30_phi0=2_phi2=4_m=005_step=04.txt", Z_Re)
-writedlm("/ssd/ri47hud/Projects/3d Cosmology/codes/data/Z_Im_a0=10_a2=30_phi0=2_phi2=4_m=005_step=04.txt", Z_Im)
+writedlm("/ssd/ri47hud/Projects/3d Cosmology/codes/data/Z_Re_a0=10_a2=30_phi0=2_phi2=4_m=005_step=01.txt", Z_Re)
+writedlm("/ssd/ri47hud/Projects/3d Cosmology/codes/data/Z_Im_a0=10_a2=30_phi0=2_phi2=4_m=005_step=01.txt", Z_Im)
