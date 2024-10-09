@@ -48,6 +48,14 @@ end
 
 ### Scalar field amplitude after integrating out the bulk scalar field 
 
+function S_phi_eff(a0::Float64, a1::Float64, a2::Float64, b0::Float64, b1::Float64, ϕ0::Float64, ϕ2::Float64, m::Float64)
+
+    (ϕ0 - ϕ2)^2*((w(a0, a1, b0)*w(a1, a2, b1))/(w(a0, a1, b0) + w(a1, a2, b1) - M(a0, a1, b0, m) - M(a1, a2, b1, m))) 
+    - ϕ0^2*(M(a0, a1, b0, m) + (w(a0, a1, b0)*(M(a0, a1, b0, m) + M(a1, a2, b1, m)))/(w(a0, a1, b0) + w(a1, a2, b1) - M(a0, a1, b0, m) - M(a1, a2, b1, m))) 
+    - ϕ2^2*(M(a1, a2, b1, m) + (w(a1, a2, b1)*(M(a0, a1, b0, m) + M(a1, a2, b1, m)))/(w(a0, a1, b0) + w(a1, a2, b1) - M(a0, a1, b0, m) - M(a1, a2, b1, m)))
+    
+end
+
 function ϕintegral(a0::Float64, a1::Float64, a2::Float64, b0::Float64, b1::Float64, ϕ0::Float64, ϕ2::Float64, m::Float64)
 
     res = exp(im*((ϕ0 - ϕ2)^2*((w(a0, a1, b0)*w(a1, a2, b1))/(w(a0, a1, b0) + w(a1, a2, b1) - M(a0, a1, b0, m) - M(a1, a2, b1, m))) 
@@ -94,7 +102,7 @@ end
 
 function Ampl_1slice_ESF(a0::Float64, a1::Float64, a2::Float64, b0::Float64, b1::Float64, ϕ0::Float64, ϕ2::Float64, m::Float64)
 
-    res = Ampl_vertex_III_ESF(a0, a1, b0) * Ampl_vertex_III_ESF(a1, a2, b1) * ϕintegral(a0, a1, a2, b0, b1, ϕ0, ϕ2, m)
+    res = Ampl_face_SL(a1) * Ampl_vertex_III_ESF(a0, a1, b0) * Ampl_vertex_III_ESF(a1, a2, b1) * ϕintegral(a0, a1, a2, b0, b1, ϕ0, ϕ2, m)
     
 end
 
