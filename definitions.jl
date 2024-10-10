@@ -463,7 +463,7 @@ end
 
 function Ampl_vertex_III_ESF(a0::Float64, a1::Float64, b::Float64)
 
-    res = μcont_TL(a0, a1, b) * exp(im * S_Regge_III(a0, a1, b))
+    res = Ampl_face_TL(b) * μcont_TL(a0, a1, b) * exp(im * S_Regge_III(a0, a1, b))
     
 end
 
