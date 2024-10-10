@@ -12,7 +12,7 @@ m = 0.05
 a0 = 10.0
 a2 = 30.0
 
-b_range = 1.0:0.5:50.0
+b_range = 0.5:0.5:50.0
 N = length(b_range)
 Z_Re = zeros(Float64, N-1, N-1)
 Z_Im = zeros(Float64, N-1, N-1)
