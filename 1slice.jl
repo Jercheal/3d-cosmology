@@ -121,3 +121,31 @@ function Ampl_1slice_toy(a0::Float64, a1::Float64, a2::Float64, b0::Float64, b1:
     res = Ampl_face_SL(a1) * Ampl_face_TL(b0) * μcont_TL(a0, a1, b0)^2 * exp(im * S_Regge_III(a0, a1, b0)) * Ampl_face_TL(b1) * μcont_TL(a1, a2, b1)^2 * exp(im * S_Regge_III(a1, a2, b1)) * exp(im * S_phi_eff(a0, a1, a2, b0, b1, ϕ0, ϕ2, m))
     
 end
+
+### Toy amplitude v2 with modified ESF-measure and no phi-measure
+
+function Ampl_1slice_toy2(a0::Float64, a1::Float64, a2::Float64, b0::Float64, b1::Float64, ϕ0::Float64, ϕ2::Float64, m::Float64)
+
+    res = Ampl_face_SL(a1) * Ampl_face_TL(b0) * μcont_TL(a0, a1, b0)^3 * exp(im * S_Regge_III(a0, a1, b0)) * Ampl_face_TL(b1) * μcont_TL(a1, a2, b1)^3 * exp(im * S_Regge_III(a1, a2, b1)) * exp(im * S_phi_eff(a0, a1, a2, b0, b1, ϕ0, ϕ2, m))
+    
+end
+
+#----------------------------------------------
+
+### Toy amplitude with modified ESF-measure and phi-measure
+
+function Ampl_1slice_toy_phi_measure(a0::Float64, a1::Float64, a2::Float64, b0::Float64, b1::Float64, ϕ0::Float64, ϕ2::Float64, m::Float64)
+
+    res = Ampl_face_SL(a1) * Ampl_face_TL(b0) * μcont_TL(a0, a1, b0)^2 * exp(im * S_Regge_III(a0, a1, b0)) * Ampl_face_TL(b1) * μcont_TL(a1, a2, b1)^2 * exp(im * S_Regge_III(a1, a2, b1)) *  ϕintegral(a0, a1, a2, b0, b1, ϕ0, ϕ2, m)
+    
+end
+
+#----------------------------------------------
+
+### Toy amplitude 2 with modified ESF-measure and phi-measure
+
+function Ampl_1slice_toy2_phi_measure(a0::Float64, a1::Float64, a2::Float64, b0::Float64, b1::Float64, ϕ0::Float64, ϕ2::Float64, m::Float64)
+
+    res = Ampl_face_SL(a1) * Ampl_face_TL(b0) * μcont_TL(a0, a1, b0)^3 * exp(im * S_Regge_III(a0, a1, b0)) * Ampl_face_TL(b1) * μcont_TL(a1, a2, b1)^3 * exp(im * S_Regge_III(a1, a2, b1)) *  ϕintegral(a0, a1, a2, b0, b1, ϕ0, ϕ2, m)
+    
+end
