@@ -50,17 +50,19 @@ end
 
 function S_phi_eff(a0::Float64, a1::Float64, a2::Float64, b0::Float64, b1::Float64, ϕ0::Float64, ϕ2::Float64, m::Float64)
 
-    (ϕ0 - ϕ2)^2*((w(a0, a1, b0)*w(a1, a2, b1))/(w(a0, a1, b0) + w(a1, a2, b1) - M(a0, a1, b0, m) - M(a1, a2, b1, m))) 
-    - ϕ0^2*(M(a0, a1, b0, m) + (w(a0, a1, b0)*(M(a0, a1, b0, m) + M(a1, a2, b1, m)))/(w(a0, a1, b0) + w(a1, a2, b1) - M(a0, a1, b0, m) - M(a1, a2, b1, m))) 
-    - ϕ2^2*(M(a1, a2, b1, m) + (w(a1, a2, b1)*(M(a0, a1, b0, m) + M(a1, a2, b1, m)))/(w(a0, a1, b0) + w(a1, a2, b1) - M(a0, a1, b0, m) - M(a1, a2, b1, m)))
+    (ϕ0 - ϕ2)^2*((w(a0, a1, b0)*w(a1, a2, b1))/(w(a0, a1, b0) + w(a1, a2, b1) - M(a0, a1, b0, m) - M(a1, a2, b1, m))) - ϕ0^2*(M(a0, a1, b0, m) + (w(a0, a1, b0)*(M(a0, a1, b0, m) + M(a1, a2, b1, m)))/(w(a0, a1, b0) + w(a1, a2, b1) - M(a0, a1, b0, m) - M(a1, a2, b1, m))) - ϕ2^2*(M(a1, a2, b1, m) + (w(a1, a2, b1)*(M(a0, a1, b0, m) + M(a1, a2, b1, m)))/(w(a0, a1, b0) + w(a1, a2, b1) - M(a0, a1, b0, m) - M(a1, a2, b1, m)))
     
+end
+
+function S_phi_eff_big(a0::BigFloat, a1::BigFloat, a2::BigFloat, b0::BigFloat, b1::BigFloat, ϕ0::BigFloat, ϕ2::BigFloat, m::BigFloat)
+
+    (ϕ0 - ϕ2)^2*((w_big(a0, a1, b0)*w_big(a1, a2, b1))/(w_big(a0, a1, b0) + w_big(a1, a2, b1) - M_big(a0, a1, b0, m) - M_big(a1, a2, b1, m))) - ϕ0^2*(M_big(a0, a1, b0, m) + (w_big(a0, a1, b0)*(M_big(a0, a1, b0, m) + M_big(a1, a2, b1, m)))/(w_big(a0, a1, b0) + w_big(a1, a2, b1) - M_big(a0, a1, b0, m) - M_big(a1, a2, b1, m))) - ϕ2^2*(M_big(a1, a2, b1, m) + (w_big(a1, a2, b1)*(M_big(a0, a1, b0, m) + M_big(a1, a2, b1, m)))/(w_big(a0, a1, b0) + w_big(a1, a2, b1) - M_big(a0, a1, b0, m) - M_big(a1, a2, b1, m)))
+
 end
 
 function ϕintegral(a0::Float64, a1::Float64, a2::Float64, b0::Float64, b1::Float64, ϕ0::Float64, ϕ2::Float64, m::Float64)
 
-    res = exp(im*((ϕ0 - ϕ2)^2*((w(a0, a1, b0)*w(a1, a2, b1))/(w(a0, a1, b0) + w(a1, a2, b1) - M(a0, a1, b0, m) - M(a1, a2, b1, m))) 
-    - ϕ0^2*(M(a0, a1, b0, m) + (w(a0, a1, b0)*(M(a0, a1, b0, m) + M(a1, a2, b1, m)))/(w(a0, a1, b0) + w(a1, a2, b1) - M(a0, a1, b0, m) - M(a1, a2, b1, m))) 
-    - ϕ2^2*(M(a1, a2, b1, m) + (w(a1, a2, b1)*(M(a0, a1, b0, m) + M(a1, a2, b1, m)))/(w(a0, a1, b0) + w(a1, a2, b1) - M(a0, a1, b0, m) - M(a1, a2, b1, m)))))
+    res = exp(im*((ϕ0 - ϕ2)^2*((w(a0, a1, b0)*w(a1, a2, b1))/(w(a0, a1, b0) + w(a1, a2, b1) - M(a0, a1, b0, m) - M(a1, a2, b1, m))) - ϕ0^2*(M(a0, a1, b0, m) + (w(a0, a1, b0)*(M(a0, a1, b0, m) + M(a1, a2, b1, m)))/(w(a0, a1, b0) + w(a1, a2, b1) - M(a0, a1, b0, m) - M(a1, a2, b1, m))) - ϕ2^2*(M(a1, a2, b1, m) + (w(a1, a2, b1)*(M(a0, a1, b0, m) + M(a1, a2, b1, m)))/(w(a0, a1, b0) + w(a1, a2, b1) - M(a0, a1, b0, m) - M(a1, a2, b1, m)))))
 
     res *= sqrt(complex((im * pi)/(w(a0, a1, b0) + w(a1, a2, b1) - M(a0, a1, b0, m) - M(a1, a2, b1, m))))
 
@@ -68,9 +70,7 @@ end
 
 function ϕintegral_big(a0::BigFloat, a1::BigFloat, a2::BigFloat, b0::BigFloat, b1::BigFloat, ϕ0::BigFloat, ϕ2::BigFloat, m::BigFloat)
 
-    res = exp(im*((ϕ0 - ϕ2)^2*((w_big(a0, a1, b0)*w_big(a1, a2, b1))/(w_big(a0, a1, b0) + w_big(a1, a2, b1) - M_big(a0, a1, b0, m) - M_big(a1, a2, b1, m))) 
-    - ϕ0^2*(M_big(a0, a1, b0, m) + (w_big(a0, a1, b0)*(M_big(a0, a1, b0, m) + M_big(a1, a2, b1, m)))/(w_big(a0, a1, b0) + w_big(a1, a2, b1) - M_big(a0, a1, b0, m) - M_big(a1, a2, b1, m))) 
-    - ϕ2^2*(M_big(a1, a2, b1, m) + (w_big(a1, a2, b1)*(M_big(a0, a1, b0, m) + M_big(a1, a2, b1, m)))/(w_big(a0, a1, b0) + w_big(a1, a2, b1) - M_big(a0, a1, b0, m) - M_big(a1, a2, b1, m)))))
+    res = exp(im*((ϕ0 - ϕ2)^2*((w_big(a0, a1, b0)*w_big(a1, a2, b1))/(w_big(a0, a1, b0) + w_big(a1, a2, b1) - M_big(a0, a1, b0, m) - M_big(a1, a2, b1, m))) - ϕ0^2*(M_big(a0, a1, b0, m) + (w_big(a0, a1, b0)*(M_big(a0, a1, b0, m) + M_big(a1, a2, b1, m)))/(w_big(a0, a1, b0) + w_big(a1, a2, b1) - M_big(a0, a1, b0, m) - M_big(a1, a2, b1, m))) - ϕ2^2*(M_big(a1, a2, b1, m) + (w_big(a1, a2, b1)*(M_big(a0, a1, b0, m) + M_big(a1, a2, b1, m)))/(w_big(a0, a1, b0) + w_big(a1, a2, b1) - M_big(a0, a1, b0, m) - M_big(a1, a2, b1, m)))))
 
     res *= sqrt(complex((im * pi)/(w_big(a0, a1, b0) + w_big(a1, a2, b1) - M_big(a0, a1, b0, m) - M_big(a1, a2, b1, m))))
 
@@ -122,14 +122,6 @@ function Ampl_1slice_toy(a0::Float64, a1::Float64, a2::Float64, b0::Float64, b1:
     
 end
 
-### Toy amplitude v2 with modified ESF-measure and no phi-measure
-
-function Ampl_1slice_toy2(a0::Float64, a1::Float64, a2::Float64, b0::Float64, b1::Float64, ϕ0::Float64, ϕ2::Float64, m::Float64)
-
-    res = Ampl_face_SL(a1) * Ampl_face_TL(b0) * μcont_TL(a0, a1, b0)^3 * exp(im * S_Regge_III(a0, a1, b0)) * Ampl_face_TL(b1) * μcont_TL(a1, a2, b1)^3 * exp(im * S_Regge_III(a1, a2, b1)) * exp(im * S_phi_eff(a0, a1, a2, b0, b1, ϕ0, ϕ2, m))
-    
-end
-
 #----------------------------------------------
 
 ### Toy amplitude with modified ESF-measure and phi-measure
@@ -142,10 +134,16 @@ end
 
 #----------------------------------------------
 
-### Toy amplitude 2 with modified ESF-measure and phi-measure
+### Toy measure and amplitude
 
-function Ampl_1slice_toy2_phi_measure(a0::Float64, a1::Float64, a2::Float64, b0::Float64, b1::Float64, ϕ0::Float64, ϕ2::Float64, m::Float64)
+function μ_toy_1slice(a0::Float64, a1::Float64, a2::Float64, b0::Float64, b1::Float64)
 
-    res = Ampl_face_SL(a1) * Ampl_face_TL(b0) * μcont_TL(a0, a1, b0)^3 * exp(im * S_Regge_III(a0, a1, b0)) * Ampl_face_TL(b1) * μcont_TL(a1, a2, b1)^3 * exp(im * S_Regge_III(a1, a2, b1)) *  ϕintegral(a0, a1, a2, b0, b1, ϕ0, ϕ2, m)
+    (b0*a1)/((a0-a1)^2/2+b0^2)^2 * (b1*a1)/((a1-a2)^2/2+b1^2)^2
+
+end
+
+function Ampl_1slice_toy_working(a0::Float64, a1::Float64, a2::Float64, b0::Float64, b1::Float64, ϕ0::Float64, ϕ2::Float64, m::Float64)
+
+    res =  μ_toy_1slice(a0, a1, a2, b0, b1) * exp(im * S_Regge_III(a0, a1, b0)) * exp(im * S_Regge_III(a1, a2, b1)) * ϕintegral(a0, a1, a2, b0, b1, ϕ0, ϕ2, m)
     
 end
